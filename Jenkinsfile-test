@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Build and Push') {
       steps {
-        container('maven:3.3') {
+        container('maven') {
           sh 'mvn -o -Dmaven.test.skip=true clean install'
           sh 'docker build -f Dockerfile -t $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BUILD_NUMBER .'
           withCredentials([usernamePassword(credentialsId : 'dockerhub-id' ,passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,)]) {
